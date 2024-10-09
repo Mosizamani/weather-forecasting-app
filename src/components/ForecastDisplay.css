@@ -1,0 +1,33 @@
+/* src/components/ForecastDisplay.css */
+.forecast-container {
+    text-align: center;
+    margin: 20px 0;
+  }
+  
+  .forecast-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 15px;
+    justify-items: center;
+  }
+  
+  .forecast-day {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 10px;
+    width: 120px;
+  }
+  
+  .forecast-day img {
+    width: 50px;
+  }
+  
+  .forecast-day p {
+    margin: 5px 0;
+  }
+  
+  .forecast-day button {
+    margin-top: 5px;
+    padding: 5px 10px;
+  }
+  
