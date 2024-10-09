@@ -1,36 +1,43 @@
-// src/components/ForecastDisplay.jsx
 import React from 'react';
-import './ForecastDisplay.css'; // Optional: Create this file for custom styles
 
-const ForecastDisplay = ({ forecastData, unit }) => {
+const ForecastDisplay = ({ forecastData }) => {
+  // Group data by day
+  const dailyData = forecastData.list.reduce((acc, forecast) => {
+    const date = new Date(forecast.dt_txt).toLocaleDateString(); // Get only the date part
+    if (!acc[date]) {
+      acc[date] = [];
+    }
+    acc[date].push(forecast); // Push the forecast data to the respective date group
+    return acc;
+  }, {});
+
+  // Get max and min temp for each day
+  const dailyForecasts = Object.keys(dailyData).map((date) => {
+    const dayForecasts = dailyData[date]
+    const temps = dayForecasts.map((entry) => entry.main.temp)
+    const minTemp = Math.min(...temps)
+    const maxTemp = Math.max(...temps)
+    const condition = dayForecasts[0].weather[0].description; // Using the first entry for condition
+
+    return { date, minTemp, maxTemp, condition }
+  })
+
   return (
-    <div className="forecast-container">
-      <h2>10-Day Forecast</h2>
-      <div className="forecast-grid">
-        {forecastData.daily.slice(0, 10).map((day, index) => {
-          const date = new Date(day.dt * 1000).toLocaleDateString('en-US', {
-            weekday: 'long',
-            month: 'short',
-            day: 'numeric',
-          });
-          const temp = unit === 'metric' ? day.temp.day : (day.temp.day * 9/5) + 32; // Convert to Fahrenheit
-          const weather = day.weather[0].description;
-          const icon = `http://openweathermap.org/img/wn/${day.weather[0].icon}.png`;
-
-          return (
-            <div key={index} className="forecast-day">
-              <p>{date}</p>
-              <img src={icon} alt={weather} />
-              <p>{temp.toFixed(1)}°{unit === 'metric' ? 'C' : 'F'}</p>
-              <p>{weather}</p>
-              <button onClick={() => alert(`More details for ${date}`)}>More Details</button> {/* More details button */}
-            </div>
-          );
-        })}
-      </div>
+    <div>
+      <h2>5-Day Forecast</h2>
+      <ul>
+        {dailyForecasts.map((forecast, index) => (
+          <li key={index}>
+            <p>{forecast.date}</p>
+            <p>Max: {forecast.maxTemp.toFixed(1)}°C</p>
+            <p>Min: {forecast.minTemp.toFixed(1)}°C</p>
+            <p>Condition: {forecast.condition}</p>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };
 
-export default ForecastDisplay;
+export default ForecastDisplay
 

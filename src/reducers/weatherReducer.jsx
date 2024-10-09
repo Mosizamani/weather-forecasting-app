@@ -3,6 +3,7 @@ export const initialState = {
     loading: false,
     error: null,
     weatherData: null,
+    forecastData: null,
     unit: 'metric', // **Add unit state**
   }
   
@@ -11,7 +12,7 @@ export const initialState = {
       case 'FETCH_INIT':
         return { ...state, loading: true, error: null };
       case 'FETCH_SUCCESS':
-        return { ...state, loading: false, weatherData: action.payload };
+        return { ...state, loading: false, weatherData: action.payload.weather, forecastData: action.payload.forecast };
       case 'FETCH_FAILURE':
         return { ...state, loading: false, error: action.payload };
       case 'TOGGLE_UNIT': // **Add toggle unit case**
