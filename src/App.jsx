@@ -31,8 +31,6 @@ const App = () => {
       if (!forecastResponse.ok) {
         throw new Error('Forecast data not found');
       }
-
-      
       
       const forecastData = await forecastResponse.json()
       
