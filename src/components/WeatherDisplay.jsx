@@ -12,7 +12,7 @@ const WeatherDisplay = ({ data, toggleUnit, unit }) => {
   
   // If data is not available yet, return a placeholder
   if (!temp || !humidity || !windSpeed || !cityName) {
-    return <p>Weather data is not available</p>;
+    return <p>Weather data is not available</p>
   }
 
   // Convert to Fahrenheit if the unit is imperial (°F)
@@ -30,7 +30,7 @@ const WeatherDisplay = ({ data, toggleUnit, unit }) => {
       {/* Use the TemperatureToggle component */}
       <TemperatureToggle toggleUnit={toggleUnit} unit={unit} />
     </div>
-  );
+  )
 }
 
 export default WeatherDisplay

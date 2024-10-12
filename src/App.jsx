@@ -4,6 +4,7 @@ import WeatherDisplay from './components/WeatherDisplay'
 import ForecastDisplay from './components/ForecastDisplay'
 import ErrorComponent from './components/ErrorComponent'
 import { weatherReducer, initialState } from './reducers/weatherReducer'
+import './App.css'
 
 const App = () => {
   const [state, dispatch] = useReducer(weatherReducer, initialState)
@@ -51,7 +52,7 @@ const App = () => {
   }
 
   return (
-    <div>
+    <div className="App">
       <SearchBar onSearch={fetchWeatherData} inputValue={inputValue} setInputValue={setInputValue} />
       {state.loading && (
         <>
@@ -67,7 +68,7 @@ const App = () => {
          />)}
       {state.forecastData && <ForecastDisplay forecastData={state.forecastData} />}
     </div>
-  );
-};
+  )
+}
 
 export default App
