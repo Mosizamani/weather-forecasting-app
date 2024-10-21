@@ -1,6 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 
 const ForecastDisplay = ({ forecastData }) => {
+
+  const [showGraph, setShowGraph] = useState(false)
+
   // Group data by day
   const dailyData = forecastData.list.reduce((acc, forecast) => {
     const date = new Date(forecast.dt_txt).toLocaleDateString() // Get only the date part
@@ -22,6 +26,11 @@ const ForecastDisplay = ({ forecastData }) => {
     return { date, minTemp, maxTemp, condition }
   })
 
+  // Event handler for showing/hiding the graph
+  const handleShowGraph = () => {
+    setShowGraph(!showGraph)
+  }
+
   return (
     <div>
       <h2>5-Day Forecast</h2>
@@ -35,9 +44,27 @@ const ForecastDisplay = ({ forecastData }) => {
           </li>
         ))}
       </ul>
+
+      <button onClick={handleShowGraph}>{showGraph ? 'Hide Graph' : 'Show Graph'}</button>
+
+      {/* Line Graph for Min and Max Temperatures */}
+      {showGraph && (
+        <ResponsiveContainer width="100%" height={200}>
+          <LineChart data={dailyForecasts}>
+            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis dataKey="date" />
+            <YAxis />
+            <Tooltip />
+            <Legend />
+            <Line type="monotone" dataKey="minTemp" stroke="skyblue" />
+            <Line type="monotone" dataKey="maxTemp" stroke="red" />
+          </LineChart>
+        </ResponsiveContainer>
+      )}
+
     </div>
-  );
-};
+  )
+}
 
 export default ForecastDisplay
 

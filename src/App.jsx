@@ -2,8 +2,10 @@ import React, { useState, useReducer } from 'react'
 import SearchBar from './components/SearchBar'
 import WeatherDisplay from './components/WeatherDisplay'
 import ForecastDisplay from './components/ForecastDisplay'
+import LocationImage from './components/LocationImage'
 import ErrorComponent from './components/ErrorComponent'
 import { weatherReducer, initialState } from './reducers/weatherReducer'
+import axios from 'axios'
 import './App.css'
 
 const App = () => {
@@ -23,6 +25,11 @@ const App = () => {
 
       const weatherData = await weatherResponse.json()
       console.log("Fetched weather data:", weatherData)
+
+      if (!weatherData.coord) {
+        throw new Error('coordinates not found')
+      }
+
       // Fetch 5-day forecast data using coordinates from weatherData
       const { coord } = weatherData
       const forecastResponse = await fetch(
@@ -38,6 +45,7 @@ const App = () => {
       //Just to check the data
       console.log('Weather Data:', weatherData)
       console.log('Forecast Data:', forecastData)
+      console.log('Coordinates:', weatherData.coord);
 
       // Dispatch success action with both weather and forecast data
       dispatch({ type: 'FETCH_SUCCESS', payload: { weather: weatherData, forecast: forecastData } });
@@ -60,6 +68,9 @@ const App = () => {
           <a href="https://dribbble.com/shots/3718681-Loading-GIF/attachments/9981630?mode=media"></a>
         </>)}
       {state.error && <ErrorComponent message={state.error} />}
+      {state.weatherData && state.weatherData.coord && (
+        <LocationImage coord={state.weatherData.coord} />
+      )}
       {state.weatherData && (
       <WeatherDisplay 
         data={state.weatherData}
