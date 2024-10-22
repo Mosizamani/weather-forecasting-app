@@ -7,7 +7,10 @@ const ForecastDisplay = ({ forecastData }) => {
 
   // Group data by day
   const dailyData = forecastData.list.reduce((acc, forecast) => {
-    const date = new Date(forecast.dt_txt).toLocaleDateString() // Get only the date part
+    const dateObj = new Date(forecast.dt_txt)
+    const date = dateObj.toLocaleDateString() // Get the date part
+    const dayName = dateObj.toLocaleDateString('en-US', { weekday: 'long' }) // Get the day name
+
     if (!acc[date]) {
       acc[date] = []
     }
@@ -23,7 +26,11 @@ const ForecastDisplay = ({ forecastData }) => {
     const maxTemp = Math.max(...temps)
     const condition = dayForecasts[0].weather[0].description // Using the first entry for condition
 
-    return { date, minTemp, maxTemp, condition }
+    const dataObj = new Date(dayForecasts[0].dt_txt)
+    const dayName = dataObj.toLocaleDateString('en-US', { weekday: 'long' })
+    const dateWithDayName = `${dayName}(${date})`
+
+    return { date: dateWithDayName, minTemp, maxTemp, condition }
   })
 
   // Event handler for showing/hiding the graph
@@ -36,12 +43,12 @@ const ForecastDisplay = ({ forecastData }) => {
       <h2>5-Day Forecast</h2>
       <ul>
         {dailyForecasts.map((forecast, index) => (
-          <li key={index}>
+          <ul key={index}>
             <p>{forecast.date}</p>
             <p style={{color: "red"}}>Max: {forecast.maxTemp.toFixed(1)}°C</p>
             <p style={{color: "skyblue"}}>Min: {forecast.minTemp.toFixed(1)}°C</p>
             <p>Condition: {forecast.condition}</p>
-          </li>
+          </ul>
         ))}
       </ul>
 
