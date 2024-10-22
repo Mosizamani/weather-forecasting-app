@@ -56,8 +56,8 @@ const ForecastDisplay = ({ forecastData }) => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="minTemp" stroke="skyblue" />
             <Line type="monotone" dataKey="maxTemp" stroke="red" />
+            <Line type="monotone" dataKey="minTemp" stroke="skyblue" />
           </LineChart>
         </ResponsiveContainer>
       )}

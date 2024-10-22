@@ -3,9 +3,9 @@ import SearchBar from './components/SearchBar'
 import WeatherDisplay from './components/WeatherDisplay'
 import ForecastDisplay from './components/ForecastDisplay'
 import LocationImage from './components/LocationImage'
+import FuzzyWeatherForecast from './components/FuzzyWeatherForecast'
 import ErrorComponent from './components/ErrorComponent'
 import { weatherReducer, initialState } from './reducers/weatherReducer'
-import axios from 'axios'
 import './App.css'
 
 const App = () => {
@@ -72,11 +72,12 @@ const App = () => {
         <LocationImage coord={state.weatherData.coord} />
       )}
       {state.weatherData && (
-      <WeatherDisplay 
+        <WeatherDisplay 
         data={state.weatherData}
         toggleUnit={toggleUnit}
         unit={state.unit}
-         />)}
+        />)}
+      {state.weatherData && <FuzzyWeatherForecast weatherData={state.weatherData} />}
       {state.forecastData && <ForecastDisplay forecastData={state.forecastData} />}
     </div>
   )
