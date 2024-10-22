@@ -5,6 +5,7 @@ import ForecastDisplay from './components/ForecastDisplay'
 import LocationImage from './components/LocationImage'
 import FuzzyWeatherForecast from './components/FuzzyWeatherForecast'
 import ErrorComponent from './components/ErrorComponent'
+import VoiceAssistant from './components/VoiceAssistant'
 import { weatherReducer, initialState } from './reducers/weatherReducer'
 import './App.css'
 
@@ -62,6 +63,7 @@ const App = () => {
   return (
     <div className="App">
       <SearchBar onSearch={fetchWeatherData} inputValue={inputValue} setInputValue={setInputValue} />
+      <VoiceAssistant onSearch={fetchWeatherData} />
       {state.loading && (
         <>
           <p>Loading...</p>
