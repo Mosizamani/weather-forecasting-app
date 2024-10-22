@@ -7,6 +7,7 @@ import FuzzyWeatherForecast from './components/FuzzyWeatherForecast'
 import ErrorComponent from './components/ErrorComponent'
 import SpeechRecognition from './components/SpeechRecognition'
 import SpeechResponse from './components/SpeechResponse'
+import LocationDetector from './components/LocationDetector'
 import { weatherReducer, initialState } from './reducers/weatherReducer'
 import './App.css'
 
@@ -61,6 +62,32 @@ const App = () => {
     dispatch({ type: 'TOGGLE_UNIT' });
   }
 
+  const handleLocationDetect = async (latitude, longitude) => {
+    const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
+    try {
+      const weatherResponse = await fetch(
+        `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${state.unit}`
+      );
+
+      if (!weatherResponse.ok) {
+        throw new Error('Could not fetch weather data for your location');
+      }
+
+      const weatherData = await weatherResponse.json();
+      console.log("Fetched weather data for location:", weatherData);
+
+      // Dispatch success action
+      dispatch({ type: 'FETCH_SUCCESS', payload: { weather: weatherData } });
+    } catch (error) {
+      dispatch({ type: 'FETCH_FAILURE', payload: error.message });
+    }
+  };
+
+  // Function to handle errors from the LocationDetector
+  const handleError = (message) => {
+    dispatch({ type: 'FETCH_FAILURE', payload: message });
+  };
+
   return (
     <div className="App">
       <SearchBar onSearch={fetchWeatherData} inputValue={inputValue} setInputValue={setInputValue} />
@@ -71,6 +98,7 @@ const App = () => {
           <a href="https://dribbble.com/shots/3718681-Loading-GIF/attachments/9981630?mode=media"></a>
         </>)}
       {state.error && <ErrorComponent message={state.error} />}
+      <LocationDetector onLocationDetect={handleLocationDetect} onError={handleError} />
       {state.weatherData && state.weatherData.coord && (
         <LocationImage coord={state.weatherData.coord} />
       )}
