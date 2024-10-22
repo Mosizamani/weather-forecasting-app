@@ -13,14 +13,24 @@ const SpeechResponse = ({ weatherData }) => {
     const temp = Math.round(main.temp)
     const description = weather[0].description
 
-    const speechText = `Hello! The current weather in ${name} is ${temp} degrees with ${description}.`
+    const speechText = `Hello! 
+                        The current weather in ${name} is ${temp} degrees with ${description}. 
+                        Do you want more details? If so, please click on the button below.`
 
     // Create a new speech utterance instance
     const utterance = new SpeechSynthesisUtterance(speechText)
 
+    const voices = window.speechSynthesis.getVoices()
+
+    const femaleVoice = voices.find((voice) => voice.name.toLowerCase().includes('Google US English Female') || voice.name.includes('UK English Female'))
+
+    if (femaleVoice) {
+        utterance.voice = femaleVoice
+      }
+
     // Optionally set voice parameters
     utterance.lang = 'en-US'
-    utterance.pitch = 1
+    utterance.pitch = 1 
     utterance.rate = 1
 
     // Speak the weather information
