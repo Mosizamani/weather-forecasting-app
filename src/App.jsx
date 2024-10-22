@@ -6,6 +6,7 @@ import LocationImage from './components/LocationImage'
 import FuzzyWeatherForecast from './components/FuzzyWeatherForecast'
 import ErrorComponent from './components/ErrorComponent'
 import SpeechRecognition from './components/SpeechRecognition'
+import SpeechResponse from './components/SpeechResponse'
 import { weatherReducer, initialState } from './reducers/weatherReducer'
 import './App.css'
 
@@ -78,7 +79,9 @@ const App = () => {
         data={state.weatherData}
         toggleUnit={toggleUnit}
         unit={state.unit}
-        />)}
+        />
+        )}
+      {state.weatherData && <SpeechResponse weatherData={state.weatherData} />}
       {state.weatherData && <FuzzyWeatherForecast weatherData={state.weatherData} />}
       {state.forecastData && <ForecastDisplay forecastData={state.forecastData} />}
     </div>
