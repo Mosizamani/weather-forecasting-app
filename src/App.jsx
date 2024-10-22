@@ -8,12 +8,15 @@ import ErrorComponent from './components/ErrorComponent'
 import SpeechRecognition from './components/SpeechRecognition'
 import SpeechResponse from './components/SpeechResponse'
 import LocationDetector from './components/LocationDetector'
+// import LocationFetcher from './components/LocationFetcher';
 import { weatherReducer, initialState } from './reducers/weatherReducer'
 import './App.css'
 
 const App = () => {
   const [state, dispatch] = useReducer(weatherReducer, initialState)
   const [inputValue, setInputValue] = useState('')
+  // const [latitude, setLatitude] = useState(null);
+  // const [longitude, setLongitude] = useState(null);
 
   const fetchWeatherData = async (city) => {
     dispatch({ type: 'FETCH_INIT' });
@@ -83,6 +86,11 @@ const App = () => {
     }
   };
 
+  // const handleLocationDetect = (lat, lon) => {
+  //   setLatitude(lat);
+  //   setLongitude(lon);
+  // };
+
   // Function to handle errors from the LocationDetector
   const handleError = (message) => {
     dispatch({ type: 'FETCH_FAILURE', payload: message });
@@ -99,6 +107,7 @@ const App = () => {
         </>)}
       {state.error && <ErrorComponent message={state.error} />}
       <LocationDetector onLocationDetect={handleLocationDetect} onError={handleError} />
+      {/* {latitude && longitude && <LocationFetcher latitude={latitude} longitude={longitude} />} */}
       {state.weatherData && state.weatherData.coord && (
         <LocationImage coord={state.weatherData.coord} />
       )}
