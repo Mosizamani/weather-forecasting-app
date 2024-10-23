@@ -8,6 +8,7 @@ import ErrorComponent from './components/ErrorComponent'
 import SpeechRecognition from './components/SpeechRecognition'
 import SpeechResponse from './components/SpeechResponse'
 import LocationDetector from './components/LocationDetector'
+import WeatherBackground from './components/WeatherBackground'
 // import LocationFetcher from './components/LocationFetcher';
 import { weatherReducer, initialState } from './reducers/weatherReducer'
 import './App.css'
@@ -15,6 +16,7 @@ import './App.css'
 const App = () => {
   const [state, dispatch] = useReducer(weatherReducer, initialState)
   const [inputValue, setInputValue] = useState('')
+  const [weatherType, setWeatherType] = useState('')
   // const [latitude, setLatitude] = useState(null);
   // const [longitude, setLongitude] = useState(null);
 
@@ -36,6 +38,8 @@ const App = () => {
         throw new Error('coordinates not found')
       }
 
+      setWeatherType(weatherData.weather[0].description.toLowerCase())
+
       // Fetch 5-day forecast data using coordinates from weatherData
       const { coord } = weatherData
       const forecastResponse = await fetch(
@@ -49,6 +53,7 @@ const App = () => {
       const forecastData = await forecastResponse.json()
       
       //Just to check the data
+      console.log('Weather Type:', weatherData.weather[0].description)
       console.log('Weather Data:', weatherData)
       console.log('Forecast Data:', forecastData)
       console.log('Coordinates:', weatherData.coord);
@@ -70,7 +75,7 @@ const App = () => {
     try {
       const weatherResponse = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${state.unit}`
-      );
+      )
 
       if (!weatherResponse.ok) {
         throw new Error('Could not fetch weather data for your location');
@@ -87,17 +92,19 @@ const App = () => {
   };
 
   // const handleLocationDetect = (lat, lon) => {
-  //   setLatitude(lat);
-  //   setLongitude(lon);
-  // };
+  //   setLatitude(lat)
+  //   setLongitude(lon)
+  // }
 
   // Function to handle errors from the LocationDetector
   const handleError = (message) => {
-    dispatch({ type: 'FETCH_FAILURE', payload: message });
-  };
+    dispatch({ type: 'FETCH_FAILURE', payload: message })
+  }
 
   return (
-    <div className="App">
+    
+    <>
+      {/* {state.weatherData && (<WeatherBackground weatherType={weatherType}></WeatherBackground>)} */}
       <SearchBar onSearch={fetchWeatherData} inputValue={inputValue} setInputValue={setInputValue} />
       <SpeechRecognition onSearch={fetchWeatherData} />
       {state.loading && (
@@ -106,7 +113,10 @@ const App = () => {
           <a href="https://dribbble.com/shots/3718681-Loading-GIF/attachments/9981630?mode=media"></a>
         </>)}
       {state.error && <ErrorComponent message={state.error} />}
+      {state.error && <ErrorComponent message={state.error} />}
       <LocationDetector onLocationDetect={handleLocationDetect} onError={handleError} />
+      
+      {state.weatherData && <SpeechResponse weatherData={state.weatherData} />}
       {/* {latitude && longitude && <LocationFetcher latitude={latitude} longitude={longitude} />} */}
       {state.weatherData && state.weatherData.coord && (
         <LocationImage coord={state.weatherData.coord} />
@@ -118,10 +128,9 @@ const App = () => {
         unit={state.unit}
         />
         )}
-      {state.weatherData && <SpeechResponse weatherData={state.weatherData} />}
       {state.weatherData && <FuzzyWeatherForecast weatherData={state.weatherData} />}
       {state.forecastData && <ForecastDisplay forecastData={state.forecastData} />}
-    </div>
+    </>
   )
 }
 

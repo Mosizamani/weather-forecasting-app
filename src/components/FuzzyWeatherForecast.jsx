@@ -14,6 +14,7 @@ const FuzzyWeatherForecast = ({ weatherData }) => {
     'stormy',
   ])
 
+  
 
   // Helper function to apply fuzzy logic to the input data
   const getFuzzyWeatherCondition = (temperature, humidity, windSpeed) => {
