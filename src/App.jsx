@@ -104,32 +104,34 @@ const App = () => {
   return (
     
     <>
-      {/* {state.weatherData && (<WeatherBackground weatherType={weatherType}></WeatherBackground>)} */}
-      <SearchBar onSearch={fetchWeatherData} inputValue={inputValue} setInputValue={setInputValue} />
-      <SpeechRecognition onSearch={fetchWeatherData} />
-      {state.loading && (
-        <>
-          <p>Loading...</p>
-          <a href="https://dribbble.com/shots/3718681-Loading-GIF/attachments/9981630?mode=media"></a>
-        </>)}
-      {state.error && <ErrorComponent message={state.error} />}
-      {state.error && <ErrorComponent message={state.error} />}
-      <LocationDetector onLocationDetect={handleLocationDetect} onError={handleError} />
-      
-      {state.weatherData && <SpeechResponse weatherData={state.weatherData} />}
-      {/* {latitude && longitude && <LocationFetcher latitude={latitude} longitude={longitude} />} */}
-      {state.weatherData && state.weatherData.coord && (
-        <LocationImage coord={state.weatherData.coord} />
-      )}
-      {state.weatherData && (
-        <WeatherDisplay 
-        data={state.weatherData}
-        toggleUnit={toggleUnit}
-        unit={state.unit}
-        />
+      <div className="App">
+        {state.weatherData && (<WeatherBackground weatherType={weatherType}></WeatherBackground>)}
+        <SearchBar onSearch={fetchWeatherData} inputValue={inputValue} setInputValue={setInputValue} />
+        <SpeechRecognition onSearch={fetchWeatherData} />
+        {state.loading && (
+          <>
+            <p>Loading...</p>
+            <a href="https://dribbble.com/shots/3718681-Loading-GIF/attachments/9981630?mode=media"></a>
+          </>)}
+        {state.error && <ErrorComponent message={state.error} />}
+        {state.error && <ErrorComponent message={state.error} />}
+        <LocationDetector onLocationDetect={handleLocationDetect} onError={handleError} />
+        
+        {state.weatherData && <SpeechResponse weatherData={state.weatherData} />}
+        {/* {latitude && longitude && <LocationFetcher latitude={latitude} longitude={longitude} />} */}
+        {state.weatherData && state.weatherData.coord && (
+          <LocationImage coord={state.weatherData.coord} />
         )}
-      {state.weatherData && <FuzzyWeatherForecast weatherData={state.weatherData} />}
-      {state.forecastData && <ForecastDisplay forecastData={state.forecastData} />}
+        {state.weatherData && (
+          <WeatherDisplay 
+          data={state.weatherData}
+          toggleUnit={toggleUnit}
+          unit={state.unit}
+          />
+          )}
+        {state.weatherData && <FuzzyWeatherForecast weatherData={state.weatherData} />}
+        {state.forecastData && <ForecastDisplay forecastData={state.forecastData} />}
+      </div>
     </>
   )
 }

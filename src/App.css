@@ -3,11 +3,10 @@
   flex-direction: column;
   align-items: center;
   padding: 20px;
-  background-color: #f0f8ff;
+  background-color: #c8fdfb;
   min-height: 100vh;
   font-family: 'Arial', sans-serif;
-  box-sizing: border-box;
-  background-image: url('https://images.unsplash.com/photo-1557167305-d219e49f2777?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
+  /* background-image: url('https://images.unsplash.com/photo-1557167305-d219e49f2777?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'); */
 }
 
 /* body {
@@ -16,10 +15,9 @@
   margin: 0;
   padding: 0;
   background-image: url('https://images.unsplash.com/photo-1557167305-d219e49f2777?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D');
- 
-}
+} */
 
-form {
+/* form {
   display: flex;
   justify-content: center;
   margin-top: 20px;
@@ -35,7 +33,7 @@ input {
 button {
   padding: 10px;
   background-color: #007bff !important;
-  color: rgb(0, 0, 0);
+  color: rgb(255, 255, 255);
   border: none;
   cursor: pointer;
 }
