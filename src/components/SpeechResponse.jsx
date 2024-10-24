@@ -13,7 +13,7 @@ const SpeechResponse = ({ weatherData }) => {
     const temp = Math.round(main.temp)
     const description = weather[0].description
 
-    const speechText = `Hello! 
+    const speechText = `Hello!
                         The current weather in ${name} is ${temp} degrees with ${description}. 
                         Do you want more details? If so, please click on the button below.`
 
@@ -22,7 +22,7 @@ const SpeechResponse = ({ weatherData }) => {
 
     const voices = window.speechSynthesis.getVoices()
 
-    const femaleVoice = voices.find((voice) => voice.name.toLowerCase().includes('Google US English Female') || voice.name.includes('UK English Female'))
+    const femaleVoice = voices.find((voice) => voice.name.toLowerCase())
 
     if (femaleVoice) {
         utterance.voice = femaleVoice
@@ -35,6 +35,7 @@ const SpeechResponse = ({ weatherData }) => {
 
     // Speak the weather information
     window.speechSynthesis.speak(utterance)
+
   }
 
   return (

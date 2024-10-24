@@ -1,9 +1,103 @@
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  background: linear-gradient(to bottom right, #87CEEB, #FFFFFF);
+  color: #333;
+}
+
 .App {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px;
-  background-color: #c8fdfb;
+  justify-content: center;
   min-height: 100vh;
-  font-family: 'Arial', sans-serif;
+  padding: 20px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  background: rgba(255, 255, 255, 0.9);
+  transition: transform 0.2s;
+}
+
+.App:hover {
+  transform: scale(1.02);
+}
+
+h1, h2, h3 {
+  color: #2c3e50;
+}
+
+p {
+  margin: 10px 0;
+}
+
+button {
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+.error-message {
+  color: #e74c3c;
+  font-weight: bold;
+  background: rgba(231, 76, 60, 0.1);
+  padding: 10px;
+  border-radius: 5px;
+}
+
+.loading-message {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 20px;
+}
+
+.loading-message p {
+  margin-right: 10px;
+  font-size: 18px;
+  color: #2980b9;
+}
+
+.location-image {
+  width: 100%;
+  max-width: 400px;
+  border-radius: 10px;
+  margin: 20px 0;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table th, .table td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: left;
+}
+
+.table th {
+  background-color: #3498db;
+  color: white;
+}
+
+.table tr:hover {
+  background-color: rgba(52, 152, 219, 0.1);
+}
+
+@media (max-width: 768px) {
+  .App {
+      padding: 10px;
+  }
+
+  h1 {
+      font-size: 24px;
+  }
 }

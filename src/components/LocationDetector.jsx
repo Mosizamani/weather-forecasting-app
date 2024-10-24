@@ -1,5 +1,3 @@
-// components/LocationDetector.jsx
-
 import React from 'react'
 
 const LocationDetector = ({ onLocationDetect, onError }) => {
