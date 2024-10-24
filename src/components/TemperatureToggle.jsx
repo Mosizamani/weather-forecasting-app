@@ -26,4 +26,4 @@ const TemperatureToggle = ({ toggleUnit, unit }) => {
   );
 };
 
-export default TemperatureToggle;
+export default TemperatureToggle

@@ -8,7 +8,7 @@ import ErrorComponent from './components/ErrorComponent'
 import SpeechRecognition from './components/SpeechRecognition'
 import SpeechResponse from './components/SpeechResponse'
 import LocationDetector from './components/LocationDetector'
-import WeatherBackground from './components/WeatherBackground'
+// import WeatherBackground from './components/WeatherBackground'
 // import LocationFetcher from './components/LocationFetcher';
 import { weatherReducer, initialState } from './reducers/weatherReducer'
 import './App.css'
@@ -16,7 +16,7 @@ import './App.css'
 const App = () => {
   const [state, dispatch] = useReducer(weatherReducer, initialState)
   const [inputValue, setInputValue] = useState('')
-  const [weatherType, setWeatherType] = useState('')
+  // const [weatherType, setWeatherType] = useState('')
   // const [latitude, setLatitude] = useState(null);
   // const [longitude, setLongitude] = useState(null);
 
@@ -38,7 +38,7 @@ const App = () => {
         throw new Error('coordinates not found')
       }
 
-      setWeatherType(weatherData.weather[0].description.toLowerCase())
+      // setWeatherType(weatherData.weather[0].description.toLowerCase())
 
       // Fetch 5-day forecast data using coordinates from weatherData
       const { coord } = weatherData
@@ -105,7 +105,7 @@ const App = () => {
     
     <>
       <div className="App">
-        {state.weatherData && (<WeatherBackground weatherType={weatherType}></WeatherBackground>)}
+        {/* {state.weatherData && (<WeatherBackground weatherType={weatherType}></WeatherBackground>)} */}
         <SearchBar onSearch={fetchWeatherData} inputValue={inputValue} setInputValue={setInputValue} />
         <SpeechRecognition onSearch={fetchWeatherData} />
         {state.loading && (

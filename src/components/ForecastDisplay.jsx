@@ -1,9 +1,22 @@
 import React, { useState } from 'react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
+import TemperatureToggle from './TemperatureToggle'
 
 const ForecastDisplay = ({ forecastData }) => {
 
   const [showGraph, setShowGraph] = useState(false)
+  const [showForecast, setShowForecast] = useState(false)
+  const [unit, setUnit] = useState('metric'); // State to track the unit of temperature
+
+  // Function to convert temperature based on the selected unit
+  const convertTemp = (temp) => {
+    return unit === 'metric' ? temp : (temp * 9/5) + 32
+  }
+
+  // Function to toggle between Celsius and Fahrenheit
+  const toggleUnit = () => {
+    setUnit((prevUnit) => (prevUnit === 'metric' ? 'imperial' : 'metric'))
+  }
 
   // Group data by day
   const dailyData = forecastData.list.reduce((acc, forecast) => {
@@ -30,7 +43,16 @@ const ForecastDisplay = ({ forecastData }) => {
     const dayName = dataObj.toLocaleDateString('en-US', { weekday: 'long' })
     const dateWithDayName = `${dayName}(${date})`
 
-    return { date: dateWithDayName, minTemp, maxTemp, condition }
+    return { 
+      date: dateWithDayName, 
+      minTemp, 
+      maxTemp, 
+      condition,
+      minTempC: minTemp,
+      maxTempC: maxTemp,
+      minTempF: convertTemp(minTemp),
+      maxTempF: convertTemp(maxTemp),
+     }
   })
 
   // Event handler for showing/hiding the graph
@@ -38,21 +60,49 @@ const ForecastDisplay = ({ forecastData }) => {
     setShowGraph(!showGraph)
   }
 
+    // Event handler for showing/hiding the forecast
+  const handleShowForecast = () => {
+    setShowForecast(!showForecast)
+  }
+
   return (
     <div>
-      <h2>5-Day Forecast</h2>
-      <ul>
-        {dailyForecasts.map((forecast, index) => (
-          <ul key={index}>
-            <p>{forecast.date}</p>
-            <p style={{color: "red"}}>Max: {forecast.maxTemp.toFixed(1)}°C</p>
-            <p style={{color: "skyblue"}}>Min: {forecast.minTemp.toFixed(1)}°C</p>
-            <p>Condition: {forecast.condition}</p>
-          </ul>
-        ))}
-      </ul>
+      <h2>Weather Forecast</h2>
+      
 
-      <button onClick={handleShowGraph}>{showGraph ? 'Hide Graph' : 'Show Graph'}</button>
+      
+      {/* Button for toggling the forecast visibility */}
+      <button onClick={handleShowForecast} style={{ marginBottom: '20px' }}>
+        {showForecast ? 'Hide 5-Day Forecast' : 'Show 5-Day Forecast'}
+      </button>
+      {showForecast && (
+        <div>
+          {/* Use the TemperatureToggle component */}
+          <TemperatureToggle toggleUnit={toggleUnit} unit={unit} />
+          <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left' }}>
+            <thead>
+              <tr>
+                <th style={{ border: '1px solid black', padding: '8px' }}>Date</th>
+                <th style={{ border: '1px solid black', padding: '8px' }}>Temperatures (Max/Min)</th>
+                <th style={{ border: '1px solid black', padding: '8px' }}>Condition</th>
+              </tr>
+            </thead>
+            <tbody>
+              {dailyForecasts.map((forecast, index) => (
+                <tr key={index}>
+                  <td style={{ border: '1px solid black', padding: '8px' }}>{forecast.date}</td>
+                  <td style={{ border: '1px solid black', padding: '8px' }}>
+                    <span style={{ color: 'red' }}>Max: {convertTemp(forecast.maxTemp).toFixed(1)}°</span> / 
+                    <span style={{ color: 'skyblue' }}> Min: {convertTemp(forecast.minTemp).toFixed(1)}°</span>
+                  </td>
+                  <td style={{ border: '1px solid black', padding: '8px' }}>{forecast.condition}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          <button onClick={handleShowGraph}>{showGraph ? 'Hide Graph' : 'Show Graph'}</button>
+        </div>
+      )}
 
       {/* Line Graph for Min and Max Temperatures */}
       {showGraph && (
@@ -63,8 +113,8 @@ const ForecastDisplay = ({ forecastData }) => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Line type="monotone" dataKey="maxTemp" stroke="red" />
-            <Line type="monotone" dataKey="minTemp" stroke="skyblue" />
+            <Line type="monotone" dataKey={unit === 'metric' ? 'maxTempC' : 'maxTempF'} stroke="red" />
+            <Line type="monotone" dataKey={unit === 'metric' ? 'minTempC' : 'minTempF'} stroke="skyblue" />
           </LineChart>
         </ResponsiveContainer>
       )}
