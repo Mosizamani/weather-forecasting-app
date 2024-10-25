@@ -9,7 +9,7 @@ const LocationImage = ({ coord }) => {
   // Fetch location image based on coordinates using Google Static Maps API
   useEffect(() => {
     if (coord.lat && coord.lon) {
-      const staticMapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${coord.lat},${coord.lon}&zoom=12&size=600x300&key=AIzaSyALcj43SbYPxgq6GadxWwZgkjOmMYOR77A`;
+      const staticMapUrl = `https://maps.googleapis.com/maps/api/staticmap?center=${coord.lat},${coord.lon}&zoom=12&size=600x300&key=AIzaSyALcj43SbYPxgq6GadxWwZgkjOmMYOR77A`
       
       setLoading(true)
 

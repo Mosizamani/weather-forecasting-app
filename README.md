@@ -18,3 +18,5 @@ npm install fuzzyset.js
 Custom Themes and Modes
 -Integration with Local News
 Augmented Reality (AR) Features
+
+google api key: AIzaSyALcj43SbYPxgq6GadxWwZgkjOmMYOR77A

@@ -8,17 +8,13 @@ import ErrorComponent from './components/ErrorComponent'
 import SpeechRecognition from './components/SpeechRecognition'
 import SpeechResponse from './components/SpeechResponse'
 import LocationDetector from './components/LocationDetector'
-// import WeatherBackground from './components/WeatherBackground'
-// import LocationFetcher from './components/LocationFetcher';
 import { weatherReducer, initialState } from './reducers/weatherReducer'
 import './App.css'
 
 const App = () => {
   const [state, dispatch] = useReducer(weatherReducer, initialState)
   const [inputValue, setInputValue] = useState('')
-  // const [weatherType, setWeatherType] = useState('')
-  // const [latitude, setLatitude] = useState(null);
-  // const [longitude, setLongitude] = useState(null);
+
 
   const fetchWeatherData = async (city) => {
     dispatch({ type: 'FETCH_INIT' });
@@ -37,8 +33,6 @@ const App = () => {
       if (!weatherData.coord) {
         throw new Error('coordinates not found')
       }
-
-      // setWeatherType(weatherData.weather[0].description.toLowerCase())
 
       // Fetch 5-day forecast data using coordinates from weatherData
       const { coord } = weatherData
@@ -102,11 +96,6 @@ const App = () => {
     }
   }
 
-  // const handleLocationDetect = (lat, lon) => {
-  //   setLatitude(lat)
-  //   setLongitude(lon)
-  // }
-
   // Function to handle errors from the LocationDetector
   const handleError = (message) => {
     dispatch({ type: 'FETCH_FAILURE', payload: message })
@@ -116,7 +105,6 @@ const App = () => {
     
     <>
       <div className="App">
-        {/* {state.weatherData && (<WeatherBackground weatherType={weatherType}></WeatherBackground>)} */}
         <SearchBar onSearch={fetchWeatherData} inputValue={inputValue} setInputValue={setInputValue} />
         <SpeechRecognition onSearch={fetchWeatherData} />
         {state.loading && (
@@ -129,7 +117,6 @@ const App = () => {
         <LocationDetector onLocationDetect={handleLocationDetect} onError={handleError} />
         
         {state.weatherData && <SpeechResponse weatherData={state.weatherData} />}
-        {/* {latitude && longitude && <LocationFetcher latitude={latitude} longitude={longitude} />} */}
         {state.weatherData && state.weatherData.coord && (
           <LocationImage coord={state.weatherData.coord} />
         )}
