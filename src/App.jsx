@@ -84,8 +84,19 @@ const App = () => {
       const weatherData = await weatherResponse.json()
       console.log("Fetched weather data for location:", weatherData)
 
+      const { coord } = weatherData
+      const forecastResponse = await fetch(
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${coord.lat}&lon=${coord.lon}&appid=${apiKey}&units=${state.unit}`
+      )
+
+      if (!forecastResponse.ok) {
+        throw new Error('Forecast data not found')
+      }
+      
+      const forecastData = await forecastResponse.json()
+
       // Dispatch success action
-      dispatch({ type: 'FETCH_SUCCESS', payload: { weather: weatherData } })
+      dispatch({ type: 'FETCH_SUCCESS', payload: { weather: weatherData, forecast: forecastData } })
     } catch (error) {
       dispatch({ type: 'FETCH_FAILURE', payload: error.message })
     }

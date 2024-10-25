@@ -11,7 +11,7 @@ const SearchBar = ({ onSearch, inputValue, setInputValue }) => {
       script.async = true;
       script.onload = initAutocomplete;  // Initialize autocomplete when script is loaded
       document.head.appendChild(script);
-    };
+    }
 
     const initAutocomplete = () => {
       const autocomplete = new window.google.maps.places.Autocomplete(inputRef.current, {
