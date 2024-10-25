@@ -23,12 +23,12 @@ const App = () => {
   const fetchWeatherData = async (city) => {
     dispatch({ type: 'FETCH_INIT' });
     try {
-      const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
+      const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY
       const weatherResponse = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${state.unit}`
       )
       if (!weatherResponse.ok) {
-        throw new Error('City not found');
+        throw new Error('City not found')
       }
 
       const weatherData = await weatherResponse.json()
@@ -47,7 +47,7 @@ const App = () => {
       )
 
       if (!forecastResponse.ok) {
-        throw new Error('Forecast data not found');
+        throw new Error('Forecast data not found')
       }
       
       const forecastData = await forecastResponse.json()
@@ -56,40 +56,40 @@ const App = () => {
       console.log('Weather Type:', weatherData.weather[0].description)
       console.log('Weather Data:', weatherData)
       console.log('Forecast Data:', forecastData)
-      console.log('Coordinates:', weatherData.coord);
+      console.log('Coordinates:', weatherData.coord)
 
       // Dispatch success action with both weather and forecast data
-      dispatch({ type: 'FETCH_SUCCESS', payload: { weather: weatherData, forecast: forecastData } });
+      dispatch({ type: 'FETCH_SUCCESS', payload: { weather: weatherData, forecast: forecastData } })
       setInputValue('')
     } catch (error) {
-      dispatch({ type: 'FETCH_FAILURE', payload: error.message });
+      dispatch({ type: 'FETCH_FAILURE', payload: error.message })
     }
   }
 
   const toggleUnit = () => {
-    dispatch({ type: 'TOGGLE_UNIT' });
+    dispatch({ type: 'TOGGLE_UNIT' })
   }
 
   const handleLocationDetect = async (latitude, longitude) => {
-    const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY;
+    const apiKey = import.meta.env.VITE_OPENWEATHER_API_KEY
     try {
       const weatherResponse = await fetch(
         `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&appid=${apiKey}&units=${state.unit}`
       )
 
       if (!weatherResponse.ok) {
-        throw new Error('Could not fetch weather data for your location');
+        throw new Error('Could not fetch weather data for your location')
       }
 
-      const weatherData = await weatherResponse.json();
-      console.log("Fetched weather data for location:", weatherData);
+      const weatherData = await weatherResponse.json()
+      console.log("Fetched weather data for location:", weatherData)
 
       // Dispatch success action
-      dispatch({ type: 'FETCH_SUCCESS', payload: { weather: weatherData } });
+      dispatch({ type: 'FETCH_SUCCESS', payload: { weather: weatherData } })
     } catch (error) {
-      dispatch({ type: 'FETCH_FAILURE', payload: error.message });
+      dispatch({ type: 'FETCH_FAILURE', payload: error.message })
     }
-  };
+  }
 
   // const handleLocationDetect = (lat, lon) => {
   //   setLatitude(lat)

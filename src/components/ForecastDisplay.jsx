@@ -29,7 +29,7 @@ const ForecastDisplay = ({ forecastData }) => {
     }
     acc[date].push(forecast) // Push the forecast data to the respective date group
     return acc;
-  }, {});
+  }, {})
 
   // Get max and min temp for each day
   const dailyForecasts = Object.keys(dailyData).map((date) => {
