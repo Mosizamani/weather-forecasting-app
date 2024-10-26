@@ -113,7 +113,6 @@ const App = () => {
             <a href="https://dribbble.com/shots/3718681-Loading-GIF/attachments/9981630?mode=media"></a>
           </>)}
         {state.error && <ErrorComponent message={state.error} />}
-        {state.error && <ErrorComponent message={state.error} />}
         <LocationDetector onLocationDetect={handleLocationDetect} onError={handleError} />
         
         {state.weatherData && <SpeechResponse weatherData={state.weatherData} />}

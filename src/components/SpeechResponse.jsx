@@ -15,7 +15,7 @@ const SpeechResponse = ({ weatherData }) => {
 
     const speechText = `Hello!
                         The current weather in ${name} is ${temp} degrees with ${description}. 
-                        Do you want more details? If so, please click on the button below.`
+                        `
 
     // Create a new speech utterance instance
     const utterance = new SpeechSynthesisUtterance(speechText)

@@ -1,4 +1,4 @@
-// src/reducers/weatherReducer.js
+
 export const initialState = {
     loading: false,
     error: null,
