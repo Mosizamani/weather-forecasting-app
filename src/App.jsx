@@ -105,6 +105,7 @@ const App = () => {
     
     <>
       <div className="App">
+        <img src="/public/vederapp.jpg" alt="Weather App Logo" width="300" height="300" />
         <SearchBar onSearch={fetchWeatherData} inputValue={inputValue} setInputValue={setInputValue} />
         <SpeechRecognition onSearch={fetchWeatherData} />
         {state.loading && (
